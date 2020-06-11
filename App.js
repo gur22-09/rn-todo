@@ -1,13 +1,31 @@
-import React from 'react';
-import {StyleSheet, Text, View, TextInput, Button} from 'react-native';
+import React,{useState} from 'react';
+import {StyleSheet, Text, View, TextInput, Button, ScrollView, FlatList} from 'react-native';
+
+import TodoItems from './components/todoItems'; 
+import TodoInput from './components/todoInput';
 
 export default function App() {
+
+   
+    const[todoList,setTodoList] = useState([]);
+    
+    
+
+  
+   
+    const handlePress = (todo)=>{
+         setTodoList(prevState=>[...prevState,{value:todo,key:`${todo}${Math.random().toString()}`}]);
+         
+    }
     return (
         <View style={styles.screen}>
-            <View style={styles.inputContainer}>
-                <TextInput style={styles.inputContainer} placeholder='Your Todos'/>
-                <Button title='ADD'/>
-            </View>
+            <TodoInput
+             onPress={handlePress}
+            />
+            <TodoItems
+             todoList={todoList} 
+            />
+              
         </View>
     );
 }
@@ -15,14 +33,5 @@ export default function App() {
 const styles = StyleSheet.create({
     screen: {
         padding: 50
-    },
-    inputContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between'
-    },
-    input: {
-        borderBottomColor: 'black',
-        borderBottomWidth: 1,
-        width: '80%'
     }
 });
